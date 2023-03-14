@@ -1,0 +1,6 @@
+POC Update:
+
+Added source to src folder.
+Added build to artifactReleases folder.
+
+Dev Log notes inside src folder in README.
