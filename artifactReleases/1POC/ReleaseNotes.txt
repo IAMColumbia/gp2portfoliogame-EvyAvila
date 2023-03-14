@@ -1,1 +1,11 @@
 Release Notes version 1 POC
+
+This build is the POC, which only consist
+of a character inside a level. There is no 
+built in reset.
+
+Controls:
+Arrow Keys - movement
+A - plant disguise
+S - security disguise
+D - scientist disguise
