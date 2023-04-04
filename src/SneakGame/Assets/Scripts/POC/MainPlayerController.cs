@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum RobState { Plant, Security, Scientist, Normal}
 public class MainPlayerController : MainPlayer
 {
-    private RobState state;
+    internal enum ConditionState { Active, Caught, Winner}
+    internal ConditionState gameState;
+
+    internal RobState state;
     public Sprite plant;
     public Sprite Security;
     public Sprite Scientist;
@@ -16,9 +20,15 @@ public class MainPlayerController : MainPlayer
 
     private float DisguisTime;
 
+    internal bool hasPlantDisguise, hasHatDisguise, hasCoatDisguise;
+    private bool hasDisguiseEquipped;
+
+    public Transform[] locations;
+    internal int locationNum;
 
     void Start()
     {
+        locationNum = 0;
         boxCollider = GetComponent<BoxCollider2D>();
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRen = GetComponent<SpriteRenderer>();
@@ -27,13 +37,31 @@ public class MainPlayerController : MainPlayer
         DefaultSpeed = MovementSpeed;
         Normal = this.GetComponent<SpriteRenderer>().sprite;
         state = RobState.Normal;
+
+        hasDisguiseEquipped = false;
+
+        this.transform.position = locations[locationNum].position;
+
+        gameState = ConditionState.Active;
         
     }
 
     
     void FixedUpdate()
     {
-        PlayerController();
+        switch (gameState)
+        {
+            case ConditionState.Active:
+                PlayerController();
+                break;
+            case ConditionState.Caught:
+            case ConditionState.Winner:
+                ResetGame();
+                break;
+        }
+
+
+        //PlayerController();
     }
 
     private void PlayerController()
@@ -64,29 +92,41 @@ public class MainPlayerController : MainPlayer
             transform.Translate(Direction * MovementSpeed * Time.deltaTime);
         }
 
-        if(Input.GetKey(KeyCode.A))
+        if(!hasDisguiseEquipped)
         {
-            state = RobState.Plant;
+            if (Input.GetKey(KeyCode.A) && hasPlantDisguise)
+            {
+                state = RobState.Plant;
+                //hasDisguiseEquipped = true;
+            }
+            else if (Input.GetKey(KeyCode.S) && hasHatDisguise)
+            {
+                state = RobState.Security;
+                //hasDisguiseEquipped = true;
+            }
+            else if (Input.GetKey(KeyCode.D) && hasCoatDisguise)
+            {
+                state = RobState.Scientist;
+               
+            }
+
+           
         }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            state = RobState.Security;
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            state = RobState.Scientist;
-        }
-        /*
-        else if (Input.GetKey(KeyCode.W))
-        {
-            state = RobState.Normal;
-        }*/
+
+
         ChangeAppearance(state);
-        //Direction = keyDirection;
         Direction.Normalize();
 
     }
 
+    private void ResetGame()
+    {
+        if(Input.GetKey(KeyCode.R))
+        {
+            SceneManager.LoadScene("VS");
+        }
+       
+    }
     private void SetSpeed()
     {
         if(!Input.anyKey)
@@ -106,12 +146,15 @@ public class MainPlayerController : MainPlayer
         {
             case RobState.Plant:
                 this.GetComponent<SpriteRenderer>().sprite = plant;
+                hasDisguiseEquipped = true;
                 break;
             case RobState.Security:
                 this.GetComponent<SpriteRenderer>().sprite = Security;
+                hasDisguiseEquipped = true;
                 break;
             case RobState.Scientist:
                 this.GetComponent<SpriteRenderer>().sprite = Scientist;
+                hasDisguiseEquipped = true;
                 break;
             case RobState.Normal:
                 this.GetComponent<SpriteRenderer>().sprite = Normal;
@@ -120,7 +163,8 @@ public class MainPlayerController : MainPlayer
 
         if(state != RobState.Normal)
         {
-           ResetSprite();
+            ResetSprite();
+           
         } 
     }
 
@@ -130,8 +174,23 @@ public class MainPlayerController : MainPlayer
         {
             DisguisTime = Time.time + DisguiseRate / 1000;
             state = RobState.Normal;
+            hasDisguiseEquipped = false;
         }
+       
     }
 
+    public void GoToNextLocation()
+    {
+        locationNum++;
+        transform.position = locations[locationNum].position;
+    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Finish"))
+        {
+            gameState = ConditionState.Winner;
+            Debug.Log(gameState.ToString());
+        }
+    }
 }
