@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DoorInteraction : MonoBehaviour
 {
-    private GameObject Player; //Should this be public? Or make a scriptable object?
+    private GameObject Player;
     public GameManager gameMan;
 
     void Start()
@@ -24,6 +24,7 @@ public class DoorInteraction : MonoBehaviour
         {
             this.gameObject.SetActive(false);          
             gameMan.ChangeRoom();
+            Player.GetComponent<MainPlayerController>().GoToNextLocation();
         }
     }
 }
