@@ -1,1 +1,11 @@
-Release Notes version 3 Final
+Release Notes version 3 Final MVP
+
+This build is the MVP, which contains 
+almost all the features for the final version.
+
+Controls:
+Arrow Keys - Movement
+A - security disguise
+S - scientist disguise
+D - plant disguise
+R - reset game from losing or winning
