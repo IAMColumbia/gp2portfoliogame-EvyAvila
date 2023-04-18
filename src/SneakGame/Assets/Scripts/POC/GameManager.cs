@@ -15,11 +15,12 @@ public class GameManager : MonoBehaviour
 
     private int[] RotationChance = new int[] { 0, 45, 90 };
 
-    public List<GameObject> roomList;
+    private List<GameObject> roomList;
 
     // Start is called before the first frame update
     void Start()
     {
+        roomList = new List<GameObject>();
         Structures = new GameObject[] { SquareRoom, LongRoom };
         reshuffle(roomPosition);
         SetRoom();

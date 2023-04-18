@@ -5,39 +5,28 @@ Commit work for each milestone to the branch.
 Merge the brance back to the master for each Milestone
 Produce a Build of each Milestone and add to build folder 
 
-Dev Log 3:
+Dev Log 2:
+I've created a VS in Unity for my game Sneak. I was able to complete the main objectives from
+my checklist.
 
-I've created a MVP in Unity for my game Sneak. 
+I first worked on adding the enemies into the game. At the currest version, the enemies don't move,
+but are placed near the door where the players needs to enter. Their purpose is to catch the player 
+who isn't in disguise. If the player is close to their range without a disguise or is wearing the wrong
+disguise will cause a game over.
 
-I first updated the Input System to use the new version. While it took some time
-for converting and changing some of the methods, I only had one block. I wanted
-to use one Action with three binding paths for the disguises. Where, it would hold 
-three keys/buttons that would check if the specific button was pressed. However, 
-while I was searching online and experimenting, nothing was working. Instead, as
-a technical debt, I created three separate Actions. This resulted me into having to
-check the value three times, which is not correct. I'll have to continue working on
-it.
+Next, I added a function where the player can earn and use the disguises they find during the level.
+I also fixed the issue where the player can easily switch between disguises. Now, if the player is 
+wearing a disguise, they cannot switch until the player returns back to normal. 
 
-Next, I added a simple interface. The main purpose is to show which disguises the 
-player found and are able to use. I attempted to include text with the Text Mesh Pro,
-however, I didn't enjoy how much the text would move when adjusting the Game View. 
-Even while it was anchored, I decided to remove it entirely and come up with a better solution
-at a later time. 
+Next, I expanded the level. It's in a similar format with the walls and set positions. The main addition
+is the player changing their position to the next floor level. 
 
-Afterwards, I updated the Enemies by adding movement. I wanted to have the the enemies
-feel a real threat as some will walk around or standing. Thus, it help create more of a fun 
-challenge. I had an issue where the player would get caught at the start, which I change a 
-few conditions for it to stop.
+Finally, I created a simple end states for when the player wins or loses. The player wins by making to the
+last floor or level. The player loses if they are caught by the enemies. I added a condition where, if the
+player wins or loses, the controller method is not called. 
 
-Finally, I expanding the levels by making them larger and longer. It gave room for both the enemies
-and the walls to be placed. Thus, looking more active. 
-
-The only point I didn't get to update was the art assets. While it was on my To Do List, it wasn't a 
-priority to have completed.
-
-For the Final update, I aim to:
-* Add an additional obstacle
-* Create a title screen
-* Update the art
-* Create and insert music
-* Create ending transitions: A win and lose end screen
+For the next update, I aim to:
+* Convert the controls to the new Input System
+* Add an interface
+* Expand the level further
+* Update the art assets
