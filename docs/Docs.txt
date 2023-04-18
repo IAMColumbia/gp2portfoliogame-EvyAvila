@@ -1,4 +1,4 @@
-POC Update:
+MVP Update:
 
 Added source to src folder.
 Added build to artifactReleases folder.
