@@ -1,1 +1,12 @@
-Release Notes version 3 Final
+Release Notes version 4 Final
+
+This build is the Final, which contains
+all main features presented from the proposal.
+
+Controls:
+Arrow Keys - Movement
+A - security disguise
+S - scientist disguise
+D - plant disguise
+R - reset game from losing or winning
+SPACE - start game
